@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil - Galerie Photo{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-3 sidebar">
+        <h5>Galeries</h5>
+        <ul class="list-group">
+            {% for user in usersWithPhotos %}
+                <li class="list-group-item {% if selectedUser and selectedUser.id == user.id %}active{% endif %}">
+                    <a href="{{ path('app_gallery_public', {pseudo: user.pseudo}) }}" class="text-decoration-none {% if selectedUser and selectedUser.id == user.id %}text-white{% endif %}">
+                        {{ user.pseudo }}
+                    </a>
+                </li>
+            {% else %}
+                <li class="list-group-item text-muted">Aucune galerie disponible</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="col-md-9">
+        {% if selectedUser %}
+            <h4>Galerie de {{ selectedUser.pseudo }}</h4>
+            <div class="photo-grid mt-3">
+                {% for photo in selectedUser.publishedPhotos %}
+                    <div class="card photo-card">
+                        <img src="{{ asset('uploads/photos/' ~ photo.filename) }}" alt="Photo">
+                    </div>
+                {% else %}
+                    <p class="text-muted">Aucune photo publiée.</p>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <h4>Bienvenue sur la Galerie Photo</h4>
+                <p class="text-muted">Inscrivez-vous pour créer votre propre galerie !</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

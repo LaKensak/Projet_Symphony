@@ -1,0 +1,30 @@
+# Security translations
+security:
+    login:
+        title: Connexion
+        username_placeholder: Adresse email
+        password_placeholder: Mot de passe
+        remember_me: Se souvenir de moi
+        submit: Se connecter
+    logout: Déconnexion
+    invalid_credentials: Identifiants invalides.
+    account_disabled: Compte désactivé.
+    account_expired: Compte expiré.
+
+# Form translations
+form:
+    required: Ce champ est obligatoire.
+    email:
+        invalid: Adresse email invalide.
+    password:
+        min_length: Le mot de passe doit contenir au moins {{ limit }} caractères.
+        mismatch: Les mots de passe ne correspondent pas.
+
+# Flash messages
+flash:
+    success:
+        registration: Votre compte a été créé avec succès.
+        profile_updated: Votre profil a été mis à jour.
+        password_changed: Votre mot de passe a été modifié.
+    error:
+        generic: Une erreur est survenue. Veuillez réessayer.

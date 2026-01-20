@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ma Galerie{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .photos-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 15px;
+        overflow-x: auto;
+        padding: 10px;
+    }
+    .photo-item {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #fff;
+    }
+    .photo-item img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+    }
+    .photo-info {
+        padding: 10px;
+        font-size: 0.85rem;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3>Ma Galerie</h3>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">
+        Ajouter une photo
+    </button>
+</div>
+
+<div class="photos-container">
+    {% for photo in photos %}
+        <div class="photo-item">
+            <img src="{{ asset('uploads/photos/' ~ photo.filename) }}" alt="Photo">
+            <div class="photo-info">
+                <div class="text-muted small">
+                    {{ photo.uploadedAt|date('d/m/Y H:i') }}<br>
+                    {{ photo.filesizeFormatted }}
+                </div>
+                <div class="mt-2 d-flex gap-2 align-items-center">
+                    <form action="{{ path('app_photo_order', {id: photo.id}) }}" method="post" class="d-flex gap-1">
+                        {{ form_widget(orderForms[photo.id].displayOrder) }}
+                        <input type="hidden" name="_token" value="{{ csrf_token('photo_order' ~ photo.id) }}">
+                        <button type="submit" class="btn btn-sm btn-outline-primary">OK</button>
+                    </form>
+                    <form action="{{ path('app_photo_delete', {id: photo.id}) }}" method="post" onsubmit="return confirm('Supprimer cette photo ?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ photo.id) }}">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">X</button>
+                    </form>
+                </div>
+                {% if photo.displayOrder %}
+                    <span class="badge bg-success mt-1">Publiée (n°{{ photo.displayOrder }})</span>
+                {% else %}
+                    <span class="badge bg-secondary mt-1">Non publiée</span>
+                {% endif %}
+            </div>
+        </div>
+    {% else %}
+        <p class="text-muted">Aucune photo. Ajoutez votre première photo !</p>
+    {% endfor %}
+</div>
+
+<div class="modal fade" id="uploadModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ajouter une photo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            {{ form_start(uploadForm, {attr: {enctype: 'multipart/form-data'}}) }}
+            <div class="modal-body">
+                {{ form_row(uploadForm.photo) }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="submit" class="btn btn-primary">Valider</button>
+            </div>
+            {{ form_end(uploadForm) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,68 @@
+/*
+ * Application Styles
+ */
+
+/* Custom variables */
+:root {
+    --app-primary: #0d6efd;
+    --app-secondary: #6c757d;
+}
+
+/* Body styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Card hover effect */
+.card {
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Navbar customization */
+.navbar-brand {
+    font-weight: 600;
+}
+
+/* Form input focus state */
+.form-control:focus {
+    border-color: var(--app-primary);
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Button animations */
+.btn {
+    transition: all 0.2s ease-in-out;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+/* Alert animations */
+.alert {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Footer styles */
+footer {
+    border-top: 1px solid #dee2e6;
+}
+
+footer a:hover {
+    color: var(--app-primary) !important;
+}
