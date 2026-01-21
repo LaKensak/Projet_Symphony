@@ -30,6 +30,7 @@ class PhotoOrderType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Photo::class,
+            'csrf_protection' => false,
         ]);
     }
 }
